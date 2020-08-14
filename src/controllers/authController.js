@@ -19,4 +19,49 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.put('/update/:id', async (req, res) => {
+    await User.findByIdAndUpdate({'_id': req.params.id}, req.body, { new: true})
+    .then(response =>{
+        return res.status(200).json(response)
+    })
+    .catch(error =>{
+        return res.status(500).json(error);
+    });
+});
+
+router.get('/show/:id', async (req, res) => {
+    await User.findById(req.params.id)
+    .then(response => {
+        if(response)
+        return res.status(200).json(response);
+
+        else
+        return res.status(404).json({error: 'Usuario não encontrado'});
+    })
+    .catch(error => {
+        return res.status(500).json(error);
+    });
+})
+
+router.get('/all/:triggeredBy', async (req,res) =>{
+    await User.find({triggeredBy: {'$in': req.params.triggeredBy}})
+    .sort('when')
+    .then(response => {
+        return res.status(200).json(response)
+    })
+    .catch(error => {
+        return res.status(500).json(error);
+    });
+})
+
+router.delete('/delete/:id', async (req, res) =>{
+    await User.deleteOne({'_id': req.params.id})
+    .then(response =>{
+        return res.status(200).json(response)
+    })
+    .catch(error =>{
+        return res.status(500).json(error);
+    });
+})
+
 module.exports = app => app.use('/auth', router);

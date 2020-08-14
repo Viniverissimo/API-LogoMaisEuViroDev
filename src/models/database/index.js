@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect("mongodb+srv://admin:Mudar@123@logomaiseuvirodev.vxe0z.mongodb.net/<dbname>?retryWrites=true&w=majority", {
+mongoose.connect("mongodb://localhost:27017/noderest", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

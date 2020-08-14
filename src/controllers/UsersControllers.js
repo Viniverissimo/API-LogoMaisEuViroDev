@@ -9,4 +9,6 @@ router.get('/', async (req, res) => {
     res.send(users)
 });
 
+
+
 module.exports = app => app.use('/users', router);
